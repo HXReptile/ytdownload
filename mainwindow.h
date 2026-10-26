@@ -33,5 +33,6 @@ private:
     QString m_savePath;
     QString m_url;
     QStringList m_arguments_download;
+    QString m_ytDlpPath;
 };
 #endif // MAINWINDOW_H

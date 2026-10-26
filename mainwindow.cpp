@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("yt_download");
+    m_ytDlpPath = QDir(QCoreApplication::applicationDirPath()).filePath("yt-dlp/yt-dlp.exe");
     connect(ui->pushButton_getdetailinfo,&QPushButton::clicked,this,&MainWindow::slots_getDetailInfo);
     connect(&m_process_a,&QProcess::readyReadStandardOutput,this,&MainWindow::slots_readyReadStandardOutput);
     connect(&m_process_a,&QProcess::readyReadStandardError,this,&MainWindow::slots_readyReadStandardError);
@@ -35,7 +36,7 @@ void MainWindow::slots_getDetailInfo()
     arguments << "-F";
     arguments << m_url;
 
-    m_process_a.start("yt-dlp", arguments);
+    m_process_a.start(m_ytDlpPath, arguments);
 }
 
 void MainWindow::slots_readyReadStandardOutput()
@@ -59,7 +60,7 @@ void MainWindow::slots_btnDownload()
     m_arguments_download << "-P" << m_savePath;
     m_arguments_download << m_url;
 
-    m_process_b.start("yt-dlp", m_arguments_download);
+    m_process_b.start(m_ytDlpPath, m_arguments_download);
 
     m_arguments_download.clear();
 }
